@@ -42,7 +42,7 @@ int laskuri(int balls, int drawn){
 
 int main()
 {
-    cout << "Enter a total number of lottery balls: ";
+    cout << "Enter the total number of lottery balls: ";
     int balls = 0;
     cin >> balls;
 
