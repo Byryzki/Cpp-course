@@ -15,7 +15,7 @@ int sihti(int balls, int drawn){
             return false;
         }
         else{
-            return balls, drawn;
+            return true;
         }
     }
 }
