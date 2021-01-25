@@ -72,7 +72,7 @@ int translate(string key, string txt){
         char letter = key[place];
         enc += letter;
     }
-    cout << enc << endl;
+    cout << "Encrypted text: " << enc << endl;
 
     return 0;
 }
