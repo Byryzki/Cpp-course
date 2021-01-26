@@ -5,72 +5,63 @@
 using namespace std;
 
 int angli(string word){
-    int i=0;
-    int len = word.length();
+    int check = 0;
 
-    for(i = 0; i <= len; i++){
-        if(isupper(word[i])){
-                cout << "Error! The encryption key must contain only lower case characters." << endl;
-                return false;
+    for(string::size_type i = 0; i < word.size(); ++i){
+        if(not islower(word[i])){
+            cout << "Error! The encryption key must contain only lower case characters." << endl;
+            return EXIT_FAILURE;
         }
+
         else{
-            char check = word[i];
-            int count = 0;
-
-            for (int i = 0; i <= len; i++)
-                {
-                    if (word[i] ==  check)
-                    {
-                        ++ count;
-                    }
-                }
-
-            if(count != 1){
-                cout << "Error! The encryption key must contain all alphabets a-z." << endl;
-                return false;
+            if(not isascii(word[i])){
+                cout << "Error! The encryption key must contain only lower case characters." << endl;
+                return EXIT_FAILURE;
             }
             else{
-
+                char c = word[i];
+                check+= int(c);
             }
         }
     }
-    return true;
+    if(check == 2847){
+
+    return EXIT_SUCCESS;
+    }
+
+   return EXIT_FAILURE;
 }
 
 int ascii(string word){
-    int len = word.length();
 
-    for(int i=0; i <= len; i++){
-        if(islower(word[i])){
-            char ch = word[i];
-            int chnro = static_cast< int >( ch );
-
-            if(chnro < 97 or chnro > 122){
-                cout << "Error! The encryption key must contain only lower case characters." << endl;
-                return false;
-                }
-            else{
-                return true;
-            }
+    for(string::size_type i = 0; i < word.size(); ++i){
+        if(not islower(word[i])){
+            cout << "Error! The encryption key must contain only lower case characters." << endl;
+            return EXIT_FAILURE;
         }
-            else{
-                   cout << "Error! The encryption key must contain only lower case characters." << endl;
-                   return false;
-                }
 
+        else{
+            if(not isascii(word[i])){
+                cout << "Error! The encryption key must contain only lower case characters." << endl;
+                return EXIT_FAILURE;
+            }
+            else{
+
+            }
+      }
     }
-    return 0;
+
+
+    return EXIT_SUCCESS;
 }
 
 int translate(string key, string txt){
-    int len = key.length();
     string enc = "";
 
-    for(int i = 0; i <= len; i++){
-        int place = char(txt[i])-97;
+    for(string::size_type i = 0; i < txt.size(); ++i){
+        char p = txt[i];
 
-        char letter = key[place];
-        enc += letter;
+        enc += key[int(p)];
     }
     cout << "Encrypted text: " << enc << endl;
 
@@ -78,21 +69,22 @@ int translate(string key, string txt){
 }
 
 int main(){
-    cout << "Enter the encryption key: ";
-    string key = ""; // lisää valmiiksi testattaessa
-    cin >> key;
+    cout << "Enter the encryption key: " << endl;
+    string key = "qwertyuiopasdfghjklzxcvbnm"; // lisää valmiiksi testattaessa
+    //cin >> key;
     int len = key.length();
 
     if(len != 26){
         cout << "Error! The encryption key must contain 26 characters." << endl;
+        return EXIT_FAILURE;
     }
     else{
-        if(angli(key)){
+        if(angli(key) == EXIT_SUCCESS){
             cout << "Enter the text to be encrypted: ";
             string txt = "";
             cin >> txt;
 
-            if(ascii(txt)){
+            if(ascii(txt) == EXIT_SUCCESS){
                 // täysin onnistuneen syötön jälkeen.
                 // ei suostu välittämään salattavan virheistä
 
