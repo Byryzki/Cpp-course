@@ -29,6 +29,7 @@ int angli(string word){
     return EXIT_SUCCESS;
     }
 
+   cout << "Error! The encryption key must contain all alphabets a-z." << endl;
    return EXIT_FAILURE;
 }
 
