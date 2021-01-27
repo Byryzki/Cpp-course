@@ -57,11 +57,17 @@ int ascii(string word){
 
 int translate(string key, string txt){
     string enc = "";
+    string aakkoset = "abcdefghijklmnopqrstuvwzyx";
 
     for(string::size_type i = 0; i < txt.size(); ++i){
-        char p = txt[i];
+        for(string::size_type a = 0; a < key.size(); ++a){
+            if(aakkoset[a] == txt[i]){
+                enc += key[a];
+            }
+            else{
 
-        enc += key[int(p)];
+            }
+        }
     }
     cout << "Encrypted text: " << enc << endl;
 
@@ -69,8 +75,8 @@ int translate(string key, string txt){
 }
 
 int main(){
-    cout << "Enter the encryption key: " << endl;
-    string key = "qwertyuiopasdfghjklzxcvbnm"; // lisää valmiiksi testattaessa
+    cout << "Enter the encryption key: ";
+    string key = "qwertyuiopasdfghjklzxcvbnm"; // lisää qwertyuiopasdfghjklzxcvbnm valmiiksi testattaessa
     //cin >> key;
     int len = key.length();
 
