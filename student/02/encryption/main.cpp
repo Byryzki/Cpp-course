@@ -76,8 +76,8 @@ int translate(string key, string txt){
 
 int main(){
     cout << "Enter the encryption key: ";
-    string key = "qwertyuiopasdfghjklzxcvbnm"; // lisää qwertyuiopasdfghjklzxcvbnm valmiiksi testattaessa
-    //cin >> key;
+    string key = ""; // lisää qwertyuiopasdfghjklzxcvbnm valmiiksi testattaessa
+    cin >> key;
     int len = key.length();
 
     if(len != 26){
