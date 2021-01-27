@@ -66,7 +66,7 @@ int main() {
         ++guesses_used;
     }
 
-    if (is_word_already_guessed(secret_word, guessed_letters) ) {
+    if (not is_word_already_guessed(secret_word, guessed_letters) ) {
         cout << endl
              << "Guesses expired!"
              << endl;
@@ -94,7 +94,7 @@ bool is_word_already_guessed(string secret, string guessed) {
         // If such a character in secret string is met that is not in
         // guessed letters, it can be immediately concluded that
         // the whole secret word has not yet guessed.
-        if ( guessed.find(secret.at(index< secret.size())) == string::npos ) {
+        if ( guessed.find(secret.at(index)) == string::npos ) {
             return false;
         }
     }
