@@ -18,9 +18,9 @@ public:
 
 private:
     std::string owner_;
+    bool has_credit_;
     int money_;
     int credit_;
-    bool has_credit_;
     std::string iban_;
 
     // Generates IBAN (based on running_number_ below).
