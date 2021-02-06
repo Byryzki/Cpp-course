@@ -10,7 +10,7 @@ public:
     Account(const std::string& owner, bool has_credit = false, int money = 0, int credit = 0);
 
     // More methods
-    void print();
+    void print() const;
     void set_credit_limit(int money);
     void save_money(int money);
     void take_money(int money);
@@ -20,7 +20,7 @@ private:
     std::string owner_;
     int money_;
     int credit_;
-    bool has_credit;
+    bool has_credit_;
     std::string iban_;
 
     // Generates IBAN (based on running_number_ below).
