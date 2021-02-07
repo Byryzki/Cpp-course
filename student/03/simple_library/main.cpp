@@ -1,5 +1,5 @@
 #include "date.hh"
-#include "book.hh"
+#include "Book.hh"
 #include <iostream>
 
 using namespace std;
@@ -10,7 +10,7 @@ int main()
     Date today(5, 5, 2020);
 
     // Creating a book
-    book book1("Kivi", "Seitseman veljesta");
+    Book book1("Kivi", "Seitseman veljesta");
     book1.print();
 
     // Loaning a book

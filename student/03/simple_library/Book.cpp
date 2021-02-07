@@ -1,11 +1,11 @@
-#include "book.hh"
+#include "Book.hh"
 #include "date.hh"
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-book::book(const string& writer, const string& name):
+Book::Book(const string& writer, const string& name):
         writer_(writer), name_(name), available_(true), loan_date_(Date(1,1,1)), expiry_date_(Date(1,1,1))
 
 {
@@ -13,7 +13,7 @@ book::book(const string& writer, const string& name):
 
 }
 
-void book::print(){
+void Book::print(){
     cout << writer_ << " : " << name_ << endl;
     if(available_ == false){
         cout << "- loaned: ";
@@ -27,7 +27,7 @@ void book::print(){
     }
 }
 
-void book::loan(const Date& loan_date){
+void Book::loan(const Date& loan_date){
     if(available_ == false){
         cout << "Already loaned: cannot be loaned" << endl;
         return;
@@ -40,7 +40,7 @@ void book::loan(const Date& loan_date){
     }
 }
 
-void book::renew(){
+void Book::renew(){
     if(available_ == true){
         cout << "Not loaned: cannot be renewed" << endl;
         return;
@@ -50,6 +50,6 @@ void book::renew(){
     }
 }
 
-void book::give_back(){
+void Book::give_back(){
     available_ = true;
 }

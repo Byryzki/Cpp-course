@@ -6,10 +6,10 @@
 
 class Date;
 
-class book
+class Book
 {
 public:
-    book(const std::string& writer, const std::string& name);
+    Book(const std::string& writer, const std::string& name);
 
     void print();
     void loan(const Date& loan_date);
