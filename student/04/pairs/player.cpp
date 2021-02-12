@@ -1,0 +1,36 @@
+#include "player.hh"
+#include<string>
+#include <iostream>
+#include <card.hh>
+#include<cstdlib>
+
+Player::Player(const std::string& name, unsigned int pairs):
+    name_(name), pairs_(pairs){
+
+}
+
+std::string Player::get_name()const{
+    std::string name = "";
+    name = name_;
+    return name;
+}
+
+unsigned int Player::number_of_pairs() const{
+    unsigned int pairs = 0;
+    pairs = pairs_ / 2;
+    return pairs;
+
+}
+void Player::add_card(Card& card){
+    pairs_ += 1;
+    card.remove_from_game_board();
+}
+void Player::print() const{
+    std::cout <<"*** "<< name_ <<"has"<< pairs_<< "pair(s)"<<std::endl;
+}
+
+// Lisää luokan toteutus tähän.
+// Kuhunkin julkiseen metodiin pitäisi riittää 1-2 koodiriviä.
+
+// Add class implementation here.
+// It should be enough to write only 1-2 code lines in each public method.
