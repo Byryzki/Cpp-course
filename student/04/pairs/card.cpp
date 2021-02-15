@@ -53,13 +53,13 @@ void Card::turn()
 void Card::print() const
 {
     if(visibility_ == HIDDEN){
-        std::cout << "#" << std::endl;
+        std::cout << "#";
     }
     else if(visibility_ == OPEN){
-            std::cout << letter_ << std::endl;
+            std::cout << letter_;
     }
     else if(visibility_ == EMPTY){
-        std::cout << "." << std::endl;
+        std::cout << ".";
     }
 }
 

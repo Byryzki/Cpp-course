@@ -25,7 +25,7 @@ void Player::add_card(Card& card){
     pairs_ += 1;
     card.remove_from_game_board();
 }
-void Player::print(){
+void Player::print() const{
     std::cout <<"*** "<< name_ <<"has"<< pairs_<< "pair(s)"<<std::endl;
 }
 

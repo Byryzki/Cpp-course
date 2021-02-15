@@ -48,7 +48,7 @@ public:
     // Tulostaa pelaajan tilanteen: nimen ja tähän asti kerättyjen parien määrän.
     //
     // Prints the game status of the player: name and collected pairs so far.
-    void print();
+    void print() const;
 
 private:
     const std::string& name_;
