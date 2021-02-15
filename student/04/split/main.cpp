@@ -7,21 +7,18 @@ using namespace std;
 // TODO: Implement split function here
 // Do not change main function
 vector<string> split(string txt, char erotin, bool eityh = false){
-    if(eityh == false){
-        vector<string> eka;
-        for(int i = 0; i < int(txt.size()); ++i){
-            string sana = "";
-            if(char (txt[i]) == erotin){
-                eka.push_back(sana);
-                sana = "";
 
-            }
-            else{
-                sana += txt[i];
-            }
-        }
+    size_t start;
+    size_t end = 0;
+    vector<string> valmis;
+
+    while ((start = txt.find_first_not_of(erotin, end)) != string::npos) //tallentaa merkkijono kerrallaan vektoriin valmis
+    {
+        end = txt.find(erotin, start);
+        valmis.push_back(txt.substr(start, end - start));
     }
 
+    return valmis;
 }
 
 int main()
