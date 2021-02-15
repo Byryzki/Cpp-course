@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cctype>
 
 using namespace std;
 
@@ -17,26 +18,14 @@ vector<string> split(string txt, char erotin, bool eityh = false){
     {
         end = txt.find(erotin, start);
         valmis.push_back(txt.substr(start, end - start));
-        valmis2.push_back(txt.substr(start, end - start));
+
+        if(txt.substr(start, end - start).find_first_not_of(" ") != string::npos){
+            valmis2.push_back(txt.substr(start, end - start));
+        }
     }
 
     if(eityh == true){
-        for(int i = 0; i< int(valmis.size()); i++){
-            bool kir = false;
-            string testi = valmis.at(i);
-            for(string::size_type j=0; j < valmis.at(i).size(); j++){
-
-                if(testi.substr(j) != " "){
-                    kir = true;
-                    valmis2.at(i).clear();
-                }
-                else{
-
-                }
-            }
-
-        }
-        return valmis2;
+     return valmis2;
     }
     else{
 
