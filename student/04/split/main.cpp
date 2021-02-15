@@ -9,28 +9,33 @@ using namespace std;
 // Do not change main function
 vector<string> split(string txt, char erotin, bool eityh = false){
 
-    size_t start;
-    size_t end = 0;
-    vector<string> valmis;
-    vector<string> valmis2;
+    vector<string> vec;
+    char merkki;
+    string merkit = "";
 
-    while ((start = txt.find_first_not_of(erotin, end)) != string::npos) //tallentaa merkkijono kerrallaan vektoriin valmis
+    for(string::size_type i = 0; i < txt.size(); i++)
     {
-        end = txt.find(erotin, start);
-        valmis.push_back(txt.substr(start, end - start));
-
-        if(txt.substr(start, end - start).find_first_not_of(" ") != string::npos){
-            valmis2.push_back(txt.substr(start, end - start));
+        merkki = txt.at(i);
+        if(merkki == erotin)
+        {
+            if(eityh == true and merkit == "")
+            {
+                continue;
+            }
+            else
+            {
+                vec.push_back(merkit);
+                merkit = "";
+            }
+        }
+        else
+        {
+            merkit += merkki;
         }
     }
 
-    if(eityh == true){
-     return valmis2;
-    }
-    else{
-
-    }
-    return valmis;
+    vec.push_back(merkit);
+    return vec;
 }
 
 int main()
