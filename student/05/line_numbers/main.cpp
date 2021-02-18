@@ -16,7 +16,8 @@ int main()
     std::ifstream tiedosto(tnimi);
     if(not tiedosto)
     {
-        std::cout << "virhe" << std::endl;
+        std::cout << "Error! The file not_a_file.input cannot be opened." << std::endl;
+        return EXIT_FAILURE;
     }
     else
     {
@@ -36,5 +37,5 @@ int main()
         uusit.close();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
