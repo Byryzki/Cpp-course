@@ -16,7 +16,7 @@ int main()
     std::ifstream tiedosto(tnimi);
     if(not tiedosto)
     {
-        std::cout << "Error! The file not_a_file.input cannot be opened." << std::endl;
+        std::cout << "Error! The file " << tnimi << " cannot be opened." << std::endl;
         return EXIT_FAILURE;
     }
     else
