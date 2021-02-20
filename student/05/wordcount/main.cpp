@@ -63,7 +63,7 @@ int main()
 
          map<string, vector<int>>::iterator iter = rivit.begin();
 
-         for(iter; iter != rivit.end(); ++iter) //määrä ja rivit
+         while(iter != rivit.end()) //määrä ja rivit
          {
             int maara = count(sanat.begin(), sanat.end(), iter -> first);
             cout << iter -> first << " " << maara << ": ";
@@ -79,7 +79,7 @@ int main()
                 cout << iter -> second.at(i) << ", ";
                 }
             }
-
+            ++iter;
          }
 
         }
