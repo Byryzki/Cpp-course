@@ -65,11 +65,20 @@ int main()
 
          while(iter != rivit.end()) //määrä ja rivit
          {
-            int maara = count(sanat.begin(), sanat.end(), iter -> first);
+            auto end = iter -> second.end(); // samojen rivinro poisto
+            for (auto it = iter -> second.begin(); it != end; ++it)
+            {
+               end = std::remove(it + 1, end, *it);
+            }
+            iter -> second.erase(end, iter -> second.end());
+
+            int maara = iter -> second.size(); //count(sanat.begin(), sanat.end(), iter -> first);
+
             cout << iter -> first << " " << maara << ": ";
 
             for(string::size_type i = 0; i < iter-> second.size(); ++i) //rivien tulostus
             {
+
                 if(i+1 == iter-> second.size())
                 {
                     cout << iter -> second.at(i) << endl;
