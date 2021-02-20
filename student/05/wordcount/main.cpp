@@ -24,9 +24,8 @@ int main()
     }
     else
     {
-        map<map<string, int>, map<string, vector<int>>> valmis;
         map<string, vector<int>> rivit;
-        map<string, int> montako;
+        vector<string> sanat;
         std::string rivi;
         int rivinro = 1;
 
@@ -38,45 +37,51 @@ int main()
                 string sana = rivi.substr(0, pos);
                 rivi.erase(0, pos+1);
 
-                if(montako.find(sana) != montako.end())
+                sanat.push_back(sana);
+
+                if(rivit.find(sana) != rivit.end()) //onko sana jo?
                 {
-                    montako.at(sana) += 1;
-                    rivit[sana].push_back(rivinro);
+                    rivit.at(sana).push_back(rivinro);
                 }
                 else
                 {
-                    montako.insert({sana, 1});
-                    rivit[sana].push_back(rivinro);
+                    rivit.insert({sana, {rivinro}}); //uusi tietopari
                 }
             }
-
-            if(montako.find(rivi) != montako.end())
+            sanat.push_back(rivi);
+            if(rivit.find(rivi) != rivit.end())
             {
-                montako.at(rivi) += 1;
-                rivit[rivi].push_back(rivinro);
+                rivit.at(rivi).push_back(rivinro);
             }
             else
             {
-                montako.insert({rivi, 1});
-                rivit[rivi].push_back(rivinro);
+                rivit.insert({rivi, {rivinro}}); //uusi tietopari
             }
 
-            rivinro += 1;
-        }
+            ++rivinro;
+         }
 
-        inf.close();
+         map<string, vector<int>>::iterator iter = rivit.begin();
 
-        map<string, int>::iterator iter = montako.begin();
+         for(iter; iter != rivit.end(); ++iter) //määrä ja rivit
+         {
+            int maara = count(sanat.begin(), sanat.end(), iter -> first);
+            cout << iter -> first << " " << maara << ": ";
 
-        map<string, vector<int>>::iterator iter2 = rivit.begin();
-        int i = 0;
-        while(iter != montako.end())
-        {
-            cout << iter-> first << ": " << iter-> second;
-            cout << (iter2 -> second).at(i);
-        }
-        ++iter;
-        i += 1; // tee tulostus
+            for(string::size_type i = 0; i < iter-> second.size(); ++i) //rivien tulostus
+            {
+                if(i+1 == iter-> second.size())
+                {
+                    cout << iter -> second.at(i) << endl;
+                }
+                else
+                {
+                cout << iter -> second.at(i) << ", ";
+                }
+            }
+
+         }
+
         }
 
    return 0;
