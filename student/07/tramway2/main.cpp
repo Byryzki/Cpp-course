@@ -31,6 +31,110 @@ void print_rasse()
 }
 
 // Short and sweet main.
+std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
+    // jakaa tiedostorivin termit käytettävään muotoon
+
+    std::vector<std::string> result;
+    std::string tmp = s;
+
+    while(tmp.find(delimiter) != std::string::npos)
+    {
+        std::string new_part = tmp.substr(0, tmp.find(delimiter));
+        tmp = tmp.substr(tmp.find(delimiter)+1, tmp.size());
+        if(not (ignore_empty and new_part.empty()))
+        {
+            result.push_back(new_part);
+        }
+    }
+    if(not (ignore_empty and tmp.empty()))
+    {
+        result.push_back(tmp);
+    }
+
+    return result;
+}
+
+int LINE(std::map<std::string, std::map<std::string, double>> routes, std::string line)
+{
+    for(std::map<std::string, double>::iterator i = routes[line].begin(); i != routes[line].end(); i++) // lisää loop alamapille.
+    {
+        std::cout << " - " << i -> first << " : " << i -> second << std::endl;
+    }
+
+    return 0;
+}
+
+int LINES(std::map<std::string, std::map<std::string, double>> routes)
+{
+    for(std::map<std::string, std::map<std::string, double>>::iterator i = routes.begin(); i != routes.end(); i++)
+    {
+        std::cout << i -> first << std::endl;
+    }
+
+    return 0;
+}
+
+int UI(std::map<std::string, std::map<std::string, double>> routes)
+{
+    while(true)
+    {
+        std::cout << "tramway> ";
+        std::string command;
+        getline(std::cin, command);
+
+        std::vector<std::string> cmd = split(command, ' ', true);
+
+        /* cmd.at(0): komento, cmd.at(1): linja tai pysäkki yms. */
+        if(cmd.at(0) == "LINES")
+        {
+            std::cout << "All tramlines in alphabetical order:" << std::endl;
+            LINES(routes);
+        }
+
+        else if(cmd.at(0) == "LINE")
+        {
+            std::cout << "Line " << cmd.at(1) << " goes through these stops in the order they are listed:" << std::endl;
+            LINE(routes, cmd.at(1));
+        }
+
+        else if(cmd.at(0) == "STOPS")
+        {
+
+        }
+
+        else if(cmd.at(0) == "STOP")
+        {
+
+        }
+
+        else if(cmd.at(0) == "DISTANCE")
+        {
+
+        }
+
+        else if(cmd.at(0) == "ADDLINE")
+        {
+
+        }
+
+        else if(cmd.at(0) == "ADDSTOP")
+        {
+
+        }
+
+        else if(cmd.at(0) == "REMOVE")
+        {
+
+        }
+        else
+        {
+            std::cout << "Error: Invalid input." << std::endl;
+        }
+
+    }
+    return EXIT_SUCCESS;
+}
+
 bool duplicates(std::map<std::string, std::map<std::string, double>> routes, std::vector<std::string> row_terms)
 {
     // tutkii onko linjalla sama pysäkki monesti.
@@ -79,29 +183,6 @@ bool row_check(std::vector<std::string> row_terms)
     }
 }
 
-std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
-    // jakaa tiedostorivin termit käytettävään muotoon
-
-    std::vector<std::string> result;
-    std::string tmp = s;
-
-    while(tmp.find(delimiter) != std::string::npos)
-    {
-        std::string new_part = tmp.substr(0, tmp.find(delimiter));
-        tmp = tmp.substr(tmp.find(delimiter)+1, tmp.size());
-        if(not (ignore_empty and new_part.empty()))
-        {
-            result.push_back(new_part);
-        }
-    }
-    if(not (ignore_empty and tmp.empty()))
-    {
-        result.push_back(tmp);
-    }
-
-    return result;
-}
-
 int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
 {
     // suorittaa tiedostoon liittyvät tarkistukset ja luo sisäkkäiset tietorakenteet
@@ -126,7 +207,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
             }
 
             /* 1. rowterm: linja, 2. rowterm: pysäkki, 3. rowterm: etäisyys (double) */
-            double distance = 0.0;
+            double distance;
 
             if(row_terms.size() == 2) //etäisyys tyhjä
             {
@@ -174,10 +255,7 @@ int main()
     std::map<std::string, std::map<std::string, double>> routes;
     map_n_check(routes);
 
-    for(std::map<std::string, std::map<std::string, double>>::iterator i = routes.begin(); i != routes.end(); i++)
-    {
-        std::cout << i -> first << std::endl;
-    }
+    UI(routes);
 
 
     return EXIT_SUCCESS;
