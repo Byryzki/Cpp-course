@@ -31,6 +31,16 @@ void print_rasse()
 }
 
 // Short and sweet main.
+int LINES()
+{
+    for(std::map<std::string, std::map<std::string, double>>::iterator i = routes.begin(); i != routes.end(); i++)
+    {
+        std::cout << i -> first << std::endl;
+    }
+    
+    return 0;
+}
+
 bool duplicates(std::map<std::string, std::map<std::string, double>> routes, std::vector<std::string> row_terms)
 {
     // tutkii onko linjalla sama pysäkki monesti.
@@ -126,7 +136,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
             }
 
             /* 1. rowterm: linja, 2. rowterm: pysäkki, 3. rowterm: etäisyys (double) */
-            double distance = 0.0;
+            double distance;
 
             if(row_terms.size() == 2) //etäisyys tyhjä
             {
@@ -174,10 +184,7 @@ int main()
     std::map<std::string, std::map<std::string, double>> routes;
     map_n_check(routes);
 
-    for(std::map<std::string, std::map<std::string, double>>::iterator i = routes.begin(); i != routes.end(); i++)
-    {
-        std::cout << i -> first << std::endl;
-    }
+    
 
 
     return EXIT_SUCCESS;
