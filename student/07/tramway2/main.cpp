@@ -30,6 +30,7 @@
 #include <sstream>
 #include <set>
 #include <iomanip>
+#include<bits/stdc++.h>
 
 // The most magnificent function in this whole program.
 // Prints a RASSE
@@ -304,6 +305,8 @@ std::vector<std::string> name_repair(std::string command, char del)
     std::vector<std::string> cmd = split(command, ' ', true);
     std::vector<std::string> repaired;
 
+    transform(cmd.at(0).begin(), cmd.at(0).end(), cmd.at(0).begin(), ::tolower);
+
     if(quote) // toimenpiteet mikäli erotinmerkkejä
     {
         std::string name;
@@ -362,7 +365,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "stop")
+            else if(cmd.at(0) == "stops")
             {
                 if(cmd.size() == 1)
                 {
@@ -495,7 +498,7 @@ bool row_check(std::vector<std::string> row_terms)
     }
 }
 
-int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
+bool map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
 {
     // suorittaa tiedostoon liittyvät tarkistukset ja luo sisäkkäiset tietorakenteet
 
@@ -515,7 +518,8 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
 
             if(row_check(row_terms))
             {
-                return 1;
+                std::cout << "Error: Invalid format in file." << std::endl;
+                return false;
             }
 
             /* 1. rowterm: linja, 2. rowterm: pysäkki, 3. rowterm: etäisyys (double) */
@@ -533,28 +537,28 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
             if(duplicates(routes, row_terms) == false)
             {
                 std::cout << "Error: Stop/line already exists." << std::endl;
-                return 1;
+                return false;
             }
             if(routes.find(row_terms.at(0)) != routes.end()) //linja on ylämapissa?
             {
-                routes[row_terms.at(0)].insert({row_terms.at(1) , distance});
+                routes[row_terms.at(0)].insert({row_terms.at(1) , distance}); // tietorakenteeseen lisäys
             }
             else // uusi linja
             {
-                routes[row_terms.at(0)][row_terms.at(1)] = distance;
+                routes[row_terms.at(0)][row_terms.at(1)] = distance; // uuteen linjaan lisäys
             }
         }
 
     }
     else
     {
-        std::cout << "Error! The file could not be read." << std::endl;
-        return 1;
+        std::cout << "Error: The file could not be read." << std::endl;
+        return false;
     }
     
     inf.close();
 
-    return 0;
+    return true;
 }
 
 // Short and sweet main.
@@ -563,9 +567,9 @@ int main()
     print_rasse();
     
     std::map<std::string, std::map<std::string, double>> routes;
-    map_n_check(routes);
-
-    UI(routes);
-
+    if(map_n_check(routes))
+    {
+        UI(routes);
+    }
     return 0;
 }
