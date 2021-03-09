@@ -552,7 +552,7 @@ bool map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
     }
     else
     {
-        std::cout << "Error: The file could not be read." << std::endl;
+        std::cout << "Error: File could not be read." << std::endl;
         return false;
     }
     
@@ -570,6 +570,10 @@ int main()
     if(map_n_check(routes))
     {
         UI(routes);
+    }
+    else
+    {
+        return 1;
     }
     return 0;
 }
