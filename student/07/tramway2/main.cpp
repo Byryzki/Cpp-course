@@ -1,7 +1,24 @@
 /*
-    Pyry Laine 050282836
+    Ohjelman kirjoittaja
+    Nimi: Pyry Laine
+    Opiskelijanro: 050282836
+    GIT-käyttäjätunnus: smpyla
+    Sähköposti: pyry.j.laine@tuni.fi
+
     RASSE -projekti
- */
+    Tämä ohjelma simuloi pysäkkitieto-ohjelmaa tulevalle Tampereen raitiovaunulle. Ohjelmaan syötetään
+    vapaavalintainen, mutta määrämuotoinen tekstitiedosto, josta ohjelma tallentaa sisäkkäiseen tietorakenteeseensa
+    pysäkin linjan, nimen ja sen etäisyyden ns. lähtöpysäkistä. Tiedoston syötön jälkeen käyttäjä voi
+    lisätä, poistaa tai tutkia haluamaansa pysäkkiä tai linjaa kahdeksalla eri komennolla:
+     LINES: ohjelma tulostaa kaikki linjat aakkosjärjestyksessä.
+    LINE <linja>: tulostaa tiedoston määrittämässä järjestyksessä pysäkin ja sen etäisyyden lähtöpysäkistä.
+    STOPS: tulostaa aakkosjärjestyksessä kaikki pysäkit.
+    STOP <pysäkki>: tulostaa aakkosjärjestyksessä linjat, joihin pysäkki sisältyy.
+    DISTANCE <linja><pysäkki1><pysäkki2>: etäisyys kahden samalla linjalla sijaitsevan pysäkin välillä.
+    ADDLINE <linja>: lisätään kokonaan uusi linja (ei sisällä pysäkkejä).
+    ADDSTOP <linja><pysäkki>: lisää pysäkin tiettyyn linjaan.
+    REMOVE <pysäkki>: poistaa kyseisen pysäkin kaikista linjoista.
+*/
 
 
 #include <iostream>
@@ -30,9 +47,8 @@ void print_rasse()
                  "-------------------------------" << std::endl;
 }
 
-// Short and sweet main.
 std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
-    // jakaa tiedostorivin termit käytettävään muotoon
+    // jakaa tiedostorivin termit vektoriin
 
     std::vector<std::string> result;
     std::string tmp = s;
@@ -54,6 +70,7 @@ std::vector<std::string> split(const std::string& s, const char delimiter, bool 
     return result;
 }
 
+// kaksi seuraavaa apufunktioita termien vertailuun
 bool double_compare(std::pair<std::string, double>& a, std::pair<std::string, double>& b)
 {
     return a.second < b.second;
@@ -66,7 +83,7 @@ bool str_compare(std::string a, std::string b)
 
 std::vector<std::pair<std::string, double>> value_sort(std::map<std::string, double> line)
 {
-    /* Luo listan linjan pysäkeistä etäisyysjärjestyksessä */
+    // Luo listan linjan pysäkeistä etäisyysjärjestyksessä
 
     std::vector<std::pair<std::string, double>> sorted;
     for(auto& stop : line)
@@ -267,12 +284,11 @@ void REMOVE(std::map<std::string, std::map<std::string, double>>& routes, std::s
     }
 
 }
-/* Jos jaksaminen riittää, korjaa lainausmerkkejä varten
-std::vector<std::string> command_repair(std::string command, char del)
-{
-    // etsii komennosta paikannimen lainausmerkkien perusteella ja palauttaa paikan nimen
 
-    std::vector<std::string> cmd;
+std::vector<std::string> name_repair(std::string command, char del)
+{
+    // mikäli lainausmerkillinen nimi, poistaa ne ja yhdistää nimen yhdeksi termiksi.
+
     bool quote = false;
 
     for(auto& mark : command)
@@ -283,26 +299,33 @@ std::vector<std::string> command_repair(std::string command, char del)
             break;
         }
     }
+    command.erase(std::remove(command.begin(), command.end(), del), command.end()); // lainausmerkkien poisto
 
-    cmd = split(command, ' ', true);
-    if(quote)
+    std::vector<std::string> cmd = split(command, ' ', true);
+    std::vector<std::string> repaired;
+
+    if(quote) // toimenpiteet mikäli erotinmerkkejä
     {
         std::string name;
-        if(split(command, ' ', true).size() == 3)
+        if(cmd.size() == 3)
         {
-            command.erase(std::remove(command.begin(), command.end(), del), command.end());
-            name = cmd.at(1) + " " + cmd.at(2);
-            cmd.at(1) = name;
-            cmd.resize(2);
+            name = cmd.at(1) + ' ' + cmd.at(2);
+
+            repaired.push_back(cmd.at(0));
+            repaired.push_back(name);
         }
+        return repaired;
     }
-
-    return cmd;
+    else
+    {
+        return cmd;
+    }
 }
-*/
 
-int UI(std::map<std::string, std::map<std::string, double>> routes)
+void UI(std::map<std::string, std::map<std::string, double>> routes)
 {
+    // ohjelman käyttöjärjestelmä
+
     if(routes.size() > 0)
     {
         while(true)
@@ -311,7 +334,7 @@ int UI(std::map<std::string, std::map<std::string, double>> routes)
             std::string command;
             getline(std::cin, command);
 
-            std::vector<std::string> cmd = split(command, ' ', true);
+            std::vector<std::string> cmd = name_repair(command, '"');
 
             /* cmd.at(0): komento, cmd.at(1): linja tai pysäkki yms. */
             if(cmd.at(0) == "LINES")
@@ -418,7 +441,6 @@ int UI(std::map<std::string, std::map<std::string, double>> routes)
 
         }
     }
-    return EXIT_SUCCESS;
 }
 
 bool duplicates(std::map<std::string, std::map<std::string, double>> routes, std::vector<std::string> row_terms)
@@ -489,7 +511,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
 
             if(row_check(row_terms))
             {
-                return EXIT_FAILURE;
+                return 1;
             }
 
             /* 1. rowterm: linja, 2. rowterm: pysäkki, 3. rowterm: etäisyys (double) */
@@ -507,7 +529,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
             if(duplicates(routes, row_terms) == false)
             {
                 std::cout << "Error: Stop/line already exists." << std::endl;
-                return EXIT_FAILURE;
+                return 1;
             }
             if(routes.find(row_terms.at(0)) != routes.end()) //linja on ylämapissa?
             {
@@ -523,7 +545,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
     else
     {
         std::cout << "Error! The file could not be read." << std::endl;
-        return EXIT_FAILURE;
+        return 1;
     }
     
     inf.close();
@@ -531,6 +553,7 @@ int map_n_check(std::map<std::string, std::map<std::string, double>>& routes)
     return 0;
 }
 
+// Short and sweet main.
 int main()
 {
     print_rasse();
@@ -540,5 +563,5 @@ int main()
 
     UI(routes);
 
-    return EXIT_SUCCESS;
+    return 0;
 }
