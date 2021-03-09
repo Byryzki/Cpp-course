@@ -337,7 +337,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
             std::vector<std::string> cmd = name_repair(command, '"');
 
             /* cmd.at(0): komento, cmd.at(1): linja tai pysäkki yms. */
-            if(cmd.at(0) == "LINES")
+            if(cmd.at(0) == "lines")
             {
                 if(cmd.size() == 1)
                 {
@@ -350,7 +350,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "LINE")
+            else if(cmd.at(0) == "line")
             {
                 if(cmd.size() == 2)
                 {
@@ -362,7 +362,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "STOPS")
+            else if(cmd.at(0) == "stop")
             {
                 if(cmd.size() == 1)
                 {
@@ -375,7 +375,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "STOP")
+            else if(cmd.at(0) == "stop")
             {
                 if(cmd.size() == 2)
                 {
@@ -387,7 +387,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "DISTANCE")
+            else if(cmd.at(0) == "distance")
             {
                 if(cmd.size() == 4)
                 {
@@ -399,7 +399,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "ADDLINE")
+            else if(cmd.at(0) == "addline")
             {
                 if(cmd.size() == 2)
                 {
@@ -411,7 +411,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "ADDSTOP")
+            else if(cmd.at(0) == "addstop")
             {
                 if(cmd.size() == 4)
                 {
@@ -423,7 +423,7 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 }
             }
 
-            else if(cmd.at(0) == "REMOVE")
+            else if(cmd.at(0) == "remove")
             {
                 if(cmd.size() == 2)
                 {
@@ -433,6 +433,10 @@ void UI(std::map<std::string, std::map<std::string, double>> routes)
                 {
                     std::cout << "Error: Invalid input." << std::endl;
                 }
+            }
+            else if(cmd.at(0) == "quit")
+            {
+                break;
             }
             else
             {
