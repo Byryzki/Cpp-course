@@ -229,18 +229,15 @@ void ADDSTOP(std::map<std::string, std::map<std::string, double>>& routes, std::
 {
     bool error = false;
 
-    for(std::map<std::string, std::map<std::string, double>>::iterator lin = routes.begin(); lin != routes.end(); lin++) // pysäkkien tarkastus
+    for(std::map<std::string, double>::iterator stop = routes[line].begin(); stop != routes[line].end(); stop++)
     {
-        for(std::map<std::string, double>::iterator stop = routes[lin -> first].begin(); stop != routes[lin -> first].end(); stop++)
+        if(stop -> first == new_stop)
         {
-            if(stop -> first == new_stop)
-            {
-                error = true;
-            }
-            else if(stop -> second == distance)
-            {
-                error = true;
-            }
+            error = true;
+        }
+        else if(stop -> second == distance)
+        {
+            error = true;
         }
     }
 
