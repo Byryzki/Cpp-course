@@ -72,11 +72,11 @@ bool Cards::remove(int &id)
 
 bool Cards::bottom_to_top()
 {
-    if(top_ == nullptr)
+    if(size_ == 0)
     {
         return false;
     }
-    if(top_ == top_ -> next)
+    if(size_ == 1)
     {
         return false;
     }
