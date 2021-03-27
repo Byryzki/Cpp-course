@@ -1,5 +1,4 @@
 #include "cards.hh"
-#include <cassert>
 
 // TODO: Implement the methods here
 
@@ -158,7 +157,7 @@ void Cards::print_from_bottom_to_top(std::ostream &s)
 Cards::Card_data* Cards::get_card(size_t index)
 {
     // assert(size >= 2);
-    assert(top_ != nullptr);
+    //assert(top_ != nullptr);
     Card_data* current = top_;
 
     for(size_t i = 0; i < index; ++i)
