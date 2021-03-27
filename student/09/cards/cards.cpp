@@ -1,0 +1,136 @@
+#include "cards.hh"
+#include <cassert>
+
+// TODO: Implement the methods here
+
+Cards::Cards() :
+    top_(nullptr),
+    bottom_(nullptr)
+{
+
+}
+
+void Cards::add(int id)
+{
+    Card_data* new_card = new Card_data;
+    new_card -> data = id;
+    new_card -> next = top_;
+
+    top_ = new_card;
+    size_++;
+
+    if(top_ -> next == nullptr)
+    {
+        bottom_ = top_;
+    }
+}
+
+void Cards::print_from_top_to_bottom(std::ostream &s)
+{
+    int i = 1;
+    Card_data* current = top_;
+    while(current != nullptr)
+    {
+        s << i << ": " << current -> data << std::endl;
+        ++i;
+        current = current -> next;
+    }
+}
+
+bool Cards::remove(int &id)
+{
+    if(top_ == nullptr)
+    {
+        return false;
+    }
+
+    id = top_ -> data;
+    Card_data* second = top_ -> next;
+
+    delete top_;
+    top_ = second;
+    size_--;
+
+    return true;
+}
+
+bool Cards::bottom_to_top()
+{
+    if(top_ == nullptr)
+    {
+        return false;
+    }
+    if(top_ == top_ -> next)
+    {
+        return false;
+    }
+
+    Card_data* old_top = top_;
+    Card_data* old_bottom = bottom_;
+    Card_data* new_bottom = get_card(size_ - 2);
+
+    assert(old_bottom -> next == nullptr);
+    old_bottom -> next = old_top;
+    top_ = old_bottom;
+
+    bottom_ = new_bottom;
+    new_bottom -> next = nullptr;
+
+    return true;
+}
+
+bool Cards::top_to_bottom()
+{
+    if(size_ <= 1)
+    {
+    return false;
+    }
+    Card_data* old_top = top_;
+    Card_data* old_bottom = bottom_;
+
+    top_ = old_top -> next;
+
+    old_top -> next = nullptr;
+    old_bottom -> next = old_top;
+
+    bottom_ = old_top;
+
+    return true;
+}
+void Cards::print_from_bottom_to_top(std::ostream &s)
+{
+
+}
+
+Cards::~Cards()
+{
+    while(top_ != nullptr)
+    {
+        remove(top_ -> data);
+    }
+}
+/*
+int Cards::recursive_print(Cards::Card_data *top, std::ostream &s)
+{
+
+}
+void Cards::print_from_bottom_to_top(std::ostream &s)
+{
+
+}
+
+*/
+Cards::Card_data* Cards::get_card(size_t index)
+{
+    // assert(size >= 2);
+    assert(top_ != nullptr);
+    Card_data* current = top_;
+
+    for(size_t i = 0; i < index; ++i)
+    {
+        current = current -> next;
+    }
+
+    return current;
+}
+
