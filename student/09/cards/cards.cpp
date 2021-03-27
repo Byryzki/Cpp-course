@@ -3,6 +3,7 @@
 // TODO: Implement the methods here
 
 Cards::Cards() :
+    size_(0),
     top_(nullptr),
     bottom_(nullptr)
 {
