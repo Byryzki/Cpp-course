@@ -22,19 +22,27 @@ Queue::~Queue()
 
 void Queue::enqueue(string reg)
 {
-    Vehicle* new_car = new Vehicle;
-    new_car -> reg_num = reg;
-    new_car -> next = nullptr;
-
-    if ( first_ == nullptr )
+    if(is_green_)
     {
-        first_ = new_car;
-        last_ = new_car;
+        std::cout << "GREEN: The vehicle " << reg << " need not stop to wait" << std::endl;
     }
+
     else
     {
-        last_-> next = new_car;
-        last_ = new_car;
+        Vehicle* new_car = new Vehicle;
+        new_car -> reg_num = reg;
+        new_car -> next = nullptr;
+
+        if ( first_ == nullptr )
+        {
+            first_ = new_car;
+            last_ = new_car;
+        }
+        else
+        {
+            last_-> next = new_car;
+            last_ = new_car;
+        }
     }
 
 }
@@ -68,7 +76,8 @@ void Queue::switch_light()
 {
     if(is_green_)
     {
-
+        is_green_ = false;
+        print();
     }
     else
     {
@@ -98,9 +107,9 @@ void Queue::switch_light()
             std::cout << "can go on" << std::endl;
 
             dequeue(del);
+            is_green_ = false;
         }
-    }
-    is_green_ = false;
+    }      
 }
 
 void Queue::reset_cycle(unsigned int cycle)
