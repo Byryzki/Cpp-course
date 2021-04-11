@@ -32,13 +32,15 @@ public:
 
     void add_caretaker(std::string caretaker);
 
+    void print_careperiod();
+
 private:
     Person* patient_;
     Date start_;
     Date end_;
 
     // More attributes and methods
-    std::vector<std::string> caretakers_;
+    std::map<std::string, bool> caretakers_;
 
 };
 

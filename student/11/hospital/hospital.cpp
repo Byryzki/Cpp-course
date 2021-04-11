@@ -56,16 +56,16 @@ void Hospital::enter(Params params)
 
     CarePeriod *new_careperiod = new CarePeriod(utils::today, new_patient); //uuden potilaan uusi hoitojakso
 
-    if(careperiods_.find(patient_id) != careperiods_.end()) //jos aikaisempia hoitoja
+    if(carehistory_.find(patient_id) != carehistory_.end()) //jos aikaisempia hoitoja
     {
-        careperiods_[patient_id].push_back(new_careperiod);
+        carehistory_[patient_id].push_back(new_careperiod);
     }
     else
     {
         std::vector<CarePeriod*> care_history;
         care_history.push_back(new_careperiod);
 
-        careperiods_.insert({patient_id, care_history});    //uusi potilas ja hoitohistoria
+        carehistory_.insert({patient_id, care_history});    //uusi potilas ja hoitohistoria
     }
 
     std::cout << PATIENT_ENTERED << std::endl;
@@ -86,7 +86,7 @@ void Hospital::leave(Params params)
         current_patients_.erase(patient_id);    //potilas pois hoidettavista
     }
 
-    careperiods_[patient_id].back() -> get_end(utils::today); //vanhalle hoitojaksolle päättymispv
+    carehistory_[patient_id].back() -> get_end(utils::today); //vanhalle hoitojaksolle päättymispv
     std::cout << PATIENT_LEFT << std::endl;
 
     return;
@@ -109,7 +109,7 @@ void Hospital::assign_staff(Params params)
     }
     else
     {
-        careperiods_[patient_id].back() -> add_caretaker(caretaker_id);
+        carehistory_[patient_id].back() -> add_caretaker(caretaker_id);
         std::cout << STAFF_ASSIGNED << patient_id << std::endl;
         return;
     }
@@ -155,7 +155,18 @@ void Hospital::remove_medicine(Params params)
 
 void Hospital::print_patient_info(Params params)
 {
+    std::string patient_id(params.at(0));
 
+    if(current_patients_.find(patient_id) == current_patients_.end()) // potilas ei hoidossa
+    {
+        std::cout << CANT_FIND << patient_id << std::endl;
+        return;
+    }
+
+    for(auto carep : carehistory_[patient_id])  //käy läpi potilaan hoitojaksot
+    {
+        carep -> print_careperiod();
+    }
 }
 
 void Hospital::print_care_periods_per_staff(Params params)
