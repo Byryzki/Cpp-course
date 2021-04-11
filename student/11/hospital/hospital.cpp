@@ -74,7 +74,22 @@ void Hospital::enter(Params params)
 
 void Hospital::leave(Params params)
 {
+    std::string patient_id(params.at(0));
 
+    if(current_patients_.find(patient_id) == current_patients_.end())   //potilas ei hoidossa
+    {
+        std::cout << CANT_FIND << patient_id <<std::endl;
+        return;
+    }
+    else
+    {
+        current_patients_.erase(patient_id);    //potilas pois hoidettavista
+    }
+
+    careperiods_[patient_id].back()->get_end(utils::today); //vanhalle hoitojaksolle päättymispv
+    std::cout << PATIENT_LEFT << std::endl;
+
+    return;
 }
 
 void Hospital::assign_staff(Params params)

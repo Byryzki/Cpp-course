@@ -26,6 +26,7 @@ public:
     ~CarePeriod();
 
     // More public methods
+    void get_end(Date &today);
 
 private:
     Person* patient_;
@@ -33,6 +34,7 @@ private:
     Date end_;
 
     // More attributes and methods
+
 };
 
 #endif // CAREPERIOD_HH
