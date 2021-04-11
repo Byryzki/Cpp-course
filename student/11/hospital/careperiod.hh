@@ -28,12 +28,17 @@ public:
     // More public methods
     void get_end(Date &today);
 
+    void get_caretakers();
+
+    void add_caretaker(std::string caretaker);
+
 private:
     Person* patient_;
     Date start_;
     Date end_;
 
     // More attributes and methods
+    std::vector<std::string> caretakers_;
 
 };
 
