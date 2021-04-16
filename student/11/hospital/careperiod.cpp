@@ -1,3 +1,4 @@
+#include "person.hh"
 #include "careperiod.hh"
 #include "utils.hh"
 #include <iostream>
@@ -21,9 +22,9 @@ void CarePeriod::get_end(Date &today)
     end_ = today;
 }
 
-void CarePeriod::get_caretakers()
+std::map<std::string, bool> CarePeriod::get_caretakers()
 {
-
+    return caretakers_;
 }
 
 void CarePeriod::add_caretaker(std::string caretaker)
@@ -63,4 +64,36 @@ void CarePeriod::print_careperiod()
     }
     std::cout << "* Medicines:";
     patient_-> print_medicines("  - ");
+}
+
+bool CarePeriod::print_per_caretaker(std::string caretaker)
+{
+    bool has_patients(false);
+    for(auto const &staff : caretakers_)
+    {
+        if(staff.first == caretaker)
+        {
+            has_patients = true;
+            if(end_.is_default())   //kyseinen hoitojakso kesken
+            {
+                start_.print();
+                std::cout << " - " << std::endl;
+            }
+            else
+            {
+                start_.print();
+                std::cout << " - ";
+                end_.print();
+                std::cout << std::endl;
+            }
+
+            std::cout << "* Patient: " << patient_->get_id() << std::endl;
+        }
+    }
+    return has_patients;
+}
+
+std::vector<std::string> CarePeriod::print_medicine()
+{
+    return patient_ -> get_medicines();
 }

@@ -1,4 +1,5 @@
 #include "hospital.hh"
+#include "person.hh"
 #include "utils.hh"
 #include <iostream>
 #include <set>
@@ -171,12 +172,72 @@ void Hospital::print_patient_info(Params params)
 
 void Hospital::print_care_periods_per_staff(Params params)
 {
+    std::string caretaker_id(params.at(0));
+    bool has_patients(false);
 
+    if(staff_.find(caretaker_id) == staff_.end()) // hoitajaa ei ole
+    {
+        std::cout << CANT_FIND << caretaker_id << std::endl;
+        return;
+    }
+
+    for(auto i = carehistory_.rbegin(); i != carehistory_.rend(); ++i)
+    {
+        std::string patient = i -> first;
+        for(auto carep : carehistory_[patient])
+        {
+            if(carep -> print_per_caretaker(caretaker_id))
+            {
+                has_patients = true;
+            }
+        }
+    }
+    if(!has_patients)
+    {
+        std::cout << "None" << std::endl;
+    }
 }
 
 void Hospital::print_all_medicines(Params)
 {
+    std::map<std::string, std::vector<std::string>> all_medicines;
 
+    for(auto patient : carehistory_)
+    {
+        for(auto medptr : patient.second)    //yhden potilaan yksi hoitojakso
+        {
+            std::vector<std::string> meds = medptr -> print_medicine();
+
+            for(auto const &medicine : meds)
+            {
+                if(all_medicines.find(medicine) != all_medicines.end()) //jos lääkkeen käyttäjiä
+                {
+                    all_medicines[medicine].push_back(patient.first);
+                }
+                else
+                {
+                    std::vector<std::string> patients;
+                    patients.push_back(patient.first);
+
+                    all_medicines.insert({medicine, patients});    //uusi lääke
+                }
+            }
+        }
+    }
+
+    for(auto const &medicine : all_medicines)
+    {
+        std::cout << medicine.first << " prescribed for" << std::endl;
+        for(auto const & patient_id : medicine.second)
+        {
+            std::cout << "* " << patient_id << std::endl;
+        }
+    }
+
+    if(all_medicines.size() == 0)
+    {
+        std::cout << "None" << std::endl;
+    }
 }
 
 void Hospital::print_all_staff(Params)
@@ -196,7 +257,19 @@ void Hospital::print_all_staff(Params)
 
 void Hospital::print_all_patients(Params)
 {
+    if(carehistory_.empty())
+    {
+        std::cout << "None" << std::endl;
+    }
 
+    for(auto patient : carehistory_)
+    {
+        std::cout << patient.first << std::endl;
+        for(auto carep : patient.second)
+        {
+            carep -> print_careperiod();
+        }
+    }
 }
 
 void Hospital::print_current_patients(Params)
@@ -206,11 +279,14 @@ void Hospital::print_current_patients(Params)
         std::cout << "None" << std::endl;
         return;
     }
-    for( std::map<std::string, Person*>::const_iterator iter = current_patients_.begin();
-         iter != current_patients_.end();
-         ++iter )
+
+    for(auto patient : current_patients_)
     {
-        std::cout << iter->first << std::endl;
+        std::cout << patient.first << std::endl;
+        for(auto carep : carehistory_[patient.first])
+        {
+            carep -> print_careperiod();
+        }
     }
 }
 

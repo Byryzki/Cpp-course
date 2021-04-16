@@ -28,11 +28,15 @@ public:
     // More public methods
     void get_end(Date &today);
 
-    void get_caretakers();
+    std::map<std::string, bool> get_caretakers();
 
     void add_caretaker(std::string caretaker);
 
     void print_careperiod();
+
+    bool print_per_caretaker(std::string caretaker);
+
+    std::vector<std::string> print_medicine();
 
 private:
     Person* patient_;
