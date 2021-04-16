@@ -27,6 +27,17 @@ Hospital::~Hospital()
     {
         delete iter->second;
     }
+    //hoitojaksojen tuhous
+    for( std::map<std::string, std::vector<CarePeriod*>>::iterator
+         iter = carehistory_.begin();
+         iter != carehistory_.end();
+         ++iter )
+    {
+        for(auto carep : iter-> second)
+        {
+            delete carep;
+        }
+    }
 }
 
 void Hospital::recruit(Params params)
@@ -154,7 +165,7 @@ void Hospital::remove_medicine(Params params)
     std::cout << MEDICINE_REMOVED << patient << std::endl;
 }
 
-void Hospital::print_patient_info(Params params)
+void Hospital::print_patient_info(Params params)    //potilaskohtaisten tietojen tulostus
 {
     std::string patient_id(params.at(0));
 
@@ -192,7 +203,7 @@ void Hospital::print_care_periods_per_staff(Params params)
             }
         }
     }
-    if(!has_patients)
+    if(!has_patients) // hoitajalla ei potilaita
     {
         std::cout << "None" << std::endl;
     }
@@ -234,7 +245,7 @@ void Hospital::print_all_medicines(Params)
         }
     }
 
-    if(all_medicines.size() == 0)
+    if(all_medicines.size() == 0)   //ei lääkkeitä sairaalassa
     {
         std::cout << "None" << std::endl;
     }
@@ -242,7 +253,7 @@ void Hospital::print_all_medicines(Params)
 
 void Hospital::print_all_staff(Params)
 {
-    if( staff_.empty() )
+    if( staff_.empty() )    //ei hlökuntaa
     {
         std::cout << "None" << std::endl;
         return;
@@ -257,7 +268,7 @@ void Hospital::print_all_staff(Params)
 
 void Hospital::print_all_patients(Params)
 {
-    if(carehistory_.empty())
+    if(carehistory_.empty())    //ei potilaita uusia tai vanhoja
     {
         std::cout << "None" << std::endl;
     }
@@ -274,7 +285,7 @@ void Hospital::print_all_patients(Params)
 
 void Hospital::print_current_patients(Params)
 {
-    if( current_patients_.empty() )
+    if( current_patients_.empty() ) //ei nykyisiä potilaita
     {
         std::cout << "None" << std::endl;
         return;

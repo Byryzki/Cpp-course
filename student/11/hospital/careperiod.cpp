@@ -17,22 +17,22 @@ CarePeriod::~CarePeriod()
 {
 }
 
-void CarePeriod::get_end(Date &today)
+void CarePeriod::get_end(Date &today)   //hoitojaksolle pvm.
 {
     end_ = today;
 }
 
-std::map<std::string, bool> CarePeriod::get_caretakers()
+std::map<std::string, bool> CarePeriod::get_caretakers()    //hoitojakson henkilökunta köytettävään muotoon
 {
     return caretakers_;
 }
 
-void CarePeriod::add_caretaker(std::string caretaker)
+void CarePeriod::add_caretaker(std::string caretaker)   //hoitajan lisöys hoitojaksoon
 {
     caretakers_.insert({caretaker, true});
 }
 
-void CarePeriod::print_careperiod()
+void CarePeriod::print_careperiod() //määrämuotoinen tuloste potilaan tiedoista
 {
     if(end_.is_default())   //kyseinen hoitojakso kesken
     {
@@ -66,7 +66,7 @@ void CarePeriod::print_careperiod()
     patient_-> print_medicines("  - ");
 }
 
-bool CarePeriod::print_per_caretaker(std::string caretaker)
+bool CarePeriod::print_per_caretaker(std::string caretaker) //hoitajakohtaiset potilaat
 {
     bool has_patients(false);
     for(auto const &staff : caretakers_)
@@ -93,7 +93,7 @@ bool CarePeriod::print_per_caretaker(std::string caretaker)
     return has_patients;
 }
 
-std::vector<std::string> CarePeriod::print_medicine()
+std::vector<std::string> CarePeriod::print_medicine() //hakee Person-luokasta potilaan lääkkeet
 {
     return patient_ -> get_medicines();
 }

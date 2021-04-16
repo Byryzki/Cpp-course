@@ -113,7 +113,7 @@ private:
     std::map<std::string, Person*> staff_;
 
     // More attributes and methods
-    std::map<std::string, std::vector<CarePeriod*>> carehistory_;
+    std::map<std::string, std::vector<CarePeriod*>> carehistory_;   //kaikki potilaat ja heidän hoitojaksonsa sairaalan historiassa
 };
 
 #endif // HOSPITAL_HH

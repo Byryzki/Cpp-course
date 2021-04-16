@@ -44,7 +44,7 @@ private:
     Date end_;
 
     // More attributes and methods
-    std::map<std::string, bool> caretakers_;
+    std::map<std::string, bool> caretakers_;    //yksittäisen hoitojakson hoitajat
 
 };
 
