@@ -16,7 +16,7 @@ Hospital::~Hospital()
          iter != staff_.end();
          ++iter )
     {
-        delete iter->second;
+       delete iter->second;
     }
 
     // Remember to deallocate patients also
@@ -38,13 +38,21 @@ Hospital::~Hospital()
             delete carep;
         }
     }
+
     //potilashistorian tuhous
     for( std::map<std::string, Person*>::iterator
          iter = patienthistory_.begin();
          iter != patienthistory_.end();
          ++iter )
     {
-        delete iter -> second;
+        try
+        {
+            delete iter -> second;
+        }
+        catch (...)
+        {
+            continue;
+        }
     }
 }
 
