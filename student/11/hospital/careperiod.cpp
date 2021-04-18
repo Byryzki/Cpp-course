@@ -62,8 +62,15 @@ void CarePeriod::print_careperiod() //määrämuotoinen tuloste potilaan tiedois
         }
         std::cout << std::endl;
     }
+    if(patient_ -> get_medicines().size() == 0)
+    {
+    }
+    else
+    {
     std::cout << "* Medicines:";
     patient_-> print_medicines("  - ");
+    }
+
 }
 
 bool CarePeriod::print_per_caretaker(std::string caretaker) //hoitajakohtaiset potilaat

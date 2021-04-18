@@ -169,7 +169,7 @@ void Hospital::print_patient_info(Params params)    //potilaskohtaisten tietojen
 {
     std::string patient_id(params.at(0));
 
-    if(current_patients_.find(patient_id) == current_patients_.end()) // potilas ei hoidossa
+    if(carehistory_.find(patient_id) == carehistory_.end()) // potilas ei hoidossa
     {
         std::cout << CANT_FIND << patient_id << std::endl;
         return;
