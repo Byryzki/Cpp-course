@@ -39,21 +39,6 @@ Hospital::~Hospital()
         }
     }
 
-    //potilashistorian tuhous
-    for( std::map<std::string, Person*>::iterator
-         iter = patienthistory_.begin();
-         iter != patienthistory_.end();
-         ++iter )
-    {
-        try
-        {
-            delete iter -> second;
-        }
-        catch (...)
-        {
-            continue;
-        }
-    }
 }
 
 void Hospital::recruit(Params params)
