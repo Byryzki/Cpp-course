@@ -81,6 +81,8 @@ void Hospital::enter(Params params)
         carehistory_.insert({patient_id, care_history});    //uusi potilas ja hoitohistoria
     }
 
+
+
     std::cout << PATIENT_ENTERED << std::endl;
     return;
 }
@@ -148,6 +150,7 @@ void Hospital::add_medicine(Params params)
         return;
     }
     patient_iter->second->add_medicine(medicine, stoi(strength), stoi(dosage));
+    patienthistory_[patient] -> add_medicine(medicine, stoi(strength), stoi(dosage));
     std::cout << MEDICINE_ADDED << patient << std::endl;
 }
 
@@ -163,6 +166,7 @@ void Hospital::remove_medicine(Params params)
         return;
     }
     patient_iter->second->remove_medicine(medicine);
+    patienthistory_[patient] -> remove_medicine(medicine);
     std::cout << MEDICINE_REMOVED << patient << std::endl;
 }
 
