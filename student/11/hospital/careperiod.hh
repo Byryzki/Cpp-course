@@ -30,6 +30,8 @@ public:
 
     std::map<std::string, bool> get_caretakers();
 
+    Person* get_patient();
+
     void add_caretaker(std::string caretaker);
 
     void print_careperiod();

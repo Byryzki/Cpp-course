@@ -65,6 +65,7 @@ void Hospital::enter(Params params)
 
     Person *new_patient = new Person(patient_id);    //uusi potilas
     current_patients_.insert({patient_id, new_patient});
+    patienthistory_.insert({patient_id, new_patient});
 
     CarePeriod *new_careperiod = new CarePeriod(utils::today, new_patient); //uuden potilaan uusi hoitojakso
 
@@ -179,6 +180,11 @@ void Hospital::print_patient_info(Params params)    //potilaskohtaisten tietojen
     {
         carep -> print_careperiod();
     }
+
+    std::cout << "* Medicines:";
+
+    Person *medptr = patienthistory_[patient_id];   //tulostaa potilaan lääkityksen
+    medptr -> print_medicines("  - ");
 }
 
 void Hospital::print_care_periods_per_staff(Params params)
@@ -273,14 +279,22 @@ void Hospital::print_all_patients(Params)
         std::cout << "None" << std::endl;
     }
 
-    for(auto patient : carehistory_)
+    for(auto patient : patienthistory_)
     {
-        std::cout << patient.first << std::endl;
-        for(auto carep : patient.second)
+        std::string patient_id = patient.first;
+        std::cout << patient_id << std::endl;
+
+        for(auto carep : carehistory_[patient_id])  //käy läpi potilaan hoitojaksot
         {
             carep -> print_careperiod();
         }
+
+        std::cout << "* Medicines:";
+
+        Person *medptr = patienthistory_[patient_id];   //tulostaa potilaan lääkityksen
+        medptr -> print_medicines("  - ");
     }
+
 }
 
 void Hospital::print_current_patients(Params)
@@ -293,11 +307,18 @@ void Hospital::print_current_patients(Params)
 
     for(auto patient : current_patients_)
     {
-        std::cout << patient.first << std::endl;
-        for(auto carep : carehistory_[patient.first])
+        std::string patient_id = patient.first;
+        std::cout << patient_id << std::endl;
+
+        for(auto carep : carehistory_[patient_id])  //käy läpi potilaan hoitojaksot
         {
             carep -> print_careperiod();
         }
+
+        std::cout << "* Medicines:";
+
+        Person *medptr = patienthistory_[patient_id];   //tulostaa potilaan lääkityksen
+        medptr -> print_medicines("  - ");
     }
 }
 

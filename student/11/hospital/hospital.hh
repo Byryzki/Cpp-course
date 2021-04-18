@@ -114,6 +114,7 @@ private:
 
     // More attributes and methods
     std::map<std::string, std::vector<CarePeriod*>> carehistory_;   //kaikki potilaat ja heidän hoitojaksonsa sairaalan historiassa
+    std::map<std::string, Person*> patienthistory_;
 };
 
 #endif // HOSPITAL_HH
