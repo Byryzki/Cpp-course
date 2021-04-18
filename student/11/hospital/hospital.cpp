@@ -38,6 +38,14 @@ Hospital::~Hospital()
             delete carep;
         }
     }
+    //potilashistorian tuhous
+    for( std::map<std::string, Person*>::iterator
+         iter = patienthistory_.begin();
+         iter != patienthistory_.end();
+         ++iter )
+    {
+        delete iter -> second;
+    }
 }
 
 void Hospital::recruit(Params params)
