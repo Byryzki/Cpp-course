@@ -9,13 +9,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->horizontalSliderRed->setMinimum(0);
-    ui->horizontalSliderRed->setMaximum(100);
+    ui->horizontalSliderRed->setMaximum(300);
 
     ui->horizontalSliderGreen->setMinimum(0);
-    ui->horizontalSliderGreen->setMaximum(100);
+    ui->horizontalSliderGreen->setMaximum(300);
 
     ui->horizontalSliderBlue->setMinimum(0);
-    ui->horizontalSliderBlue->setMaximum(100);
+    ui->horizontalSliderBlue->setMaximum(300);
 
     connect(ui->horizontalSliderRed, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
     connect(ui->horizontalSliderGreen, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
