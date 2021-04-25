@@ -24,8 +24,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_timer_timeout()
 {
-    int current_min = ui -> lcd_min -> intValue();
-    int current_sec = ui -> lcd_sec -> intValue();
+    int current_min = ui -> lcdNumberMin -> intValue();
+    int current_sec = ui -> lcdNumberSec -> intValue();
 
     if(current_sec == 59)
     {
@@ -59,6 +59,6 @@ void MainWindow::on_close_button_clicked()
 
 void MainWindow::updatedisplay(int min, int sec)
 {
-    ui -> lcd_min -> display(min);
-    ui -> lcd_sec -> display(sec);
+    ui -> lcdNumberMin -> display(min);
+    ui -> lcdNumberSec -> display(sec);
 }
