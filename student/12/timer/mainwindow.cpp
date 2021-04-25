@@ -8,10 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui -> start_button, &QPushButton::clicked, this, &MainWindow::on_start_button_clicked);
-    connect(ui -> stop_button, &QPushButton::clicked, this, &MainWindow::on_stop_button_clicked);
-    connect(ui -> reset_button, &QPushButton::clicked, this, &MainWindow::on_reset_button_clicked);
-    connect(ui -> close_button, &QPushButton::clicked, this, &MainWindow::on_close_button_clicked);
+    connect(ui -> startButton, &QPushButton::clicked, this, &MainWindow::on_start_button_clicked);
+    connect(ui -> stopButton, &QPushButton::clicked, this, &MainWindow::on_stop_button_clicked);
+    connect(ui -> resetButton, &QPushButton::clicked, this, &MainWindow::on_reset_button_clicked);
+    connect(ui -> closeButton, &QPushButton::clicked, this, &MainWindow::on_close_button_clicked);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::on_timer_timeout);
 
