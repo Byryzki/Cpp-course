@@ -21,6 +21,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->horizontalSliderGreen, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
     connect(ui->horizontalSliderBlue, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
 
+    connect(ui -> horizontalSliderRed, &QSlider::valueChanged, ui -> spinBoxRed, &QSpinBox::setValue);
+    connect(ui -> horizontalSliderGreen, &QSlider::valueChanged, ui -> spinBoxGreen, &QSpinBox::setValue);
+    connect(ui -> horizontalSliderBlue, &QSlider::valueChanged, ui -> spinBoxBlue, &QSpinBox::setValue);
+
     onColorChanged();
 }
 
